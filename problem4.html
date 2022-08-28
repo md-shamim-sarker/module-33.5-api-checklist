@@ -1,0 +1,49 @@
+<!-- 
+    ৪. তুমি যে ডাটা লোড করেছো। বা ডাটা ওয়েবসাইট এ দেখাচ্ছ। সেই কোড এর মধ্যে arrow ফাংশন ইউজ করতে পারতেছো কিনা। যখন লুপ চালাচ্ছ সেখানে forEach ইউজ করতে পারতেছো কিনা। 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="./image/football.svg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <h1>Users Details</h1>
+    </header>
+    <main id="main">
+        <div>
+            <h2>Name</h2>
+            <p>City</p>
+        </div>
+    </main>
+
+    <script>
+        const loadData = () => {
+            fetch('https://jsonplaceholder.typicode.com/users')
+                .then(res => res.json())
+                .then(data => display(data))
+                .catch(error => console.log(error));
+        };
+        const display = users => {
+            const main = document.getElementById('main');
+            users.forEach(user => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <h2>${user.name}</h2>
+                    <p>${user.address.city}</p>
+                `;
+                main.appendChild(div);
+                // console.log(user);
+            });
+        };
+        loadData();
+    </script>
+</body>
+
+</html>
