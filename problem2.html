@@ -1,0 +1,41 @@
+<!-- 
+    ২. যে কমেন্ট এর ডাটাগুলো কনসোল এ দেখাতে পারছো। সেগুলা আবার তুমি html এ দেখাতে পারতেছো কিনা। একটা সিস্টেম হবে তোমার একটা বাটন থাকবে সেটাতে ক্লিক করলে ডাটা লোড হবে। তারপর সেই ডাটা তুমি ওয়েবসাইট এ দেখাবে। 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="./image/football.svg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Comments List</h1>
+    <button id="btn">Click Me!</button>
+    <ol id="ol"></ol>
+
+    <script>
+        document.getElementById('btn').addEventListener('click', () => {
+            fetch('https://jsonplaceholder.typicode.com/comments/')
+                .then(response => response.json())
+                .then(data => display(data))
+                .catch(error => console.log(error));
+        });
+        const display = comments => {
+            const ol = document.getElementById('ol');
+
+            for(let i = 0; i < 10; i++) {
+                const li = document.createElement('li');
+                li.innerText = comments[i].body;
+                ol.appendChild(li);
+                console.log(comments[i].body);
+            }
+        };
+    </script>
+
+</body>
+
+</html>
