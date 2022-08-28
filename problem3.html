@@ -14,7 +14,30 @@
 
 <body>
     <h1>Comments API</h1>
-    <button id="btn">Click Me!</button>
+    <main id="main">
+        <div class="card"></div>
+    </main>
+    <script>
+        const loadData = () => {
+            fetch('https://jsonplaceholder.typicode.com/comments/')
+                .then(response => response.json())
+                .then(data => display(data))
+                .catch(error => console.log(error));
+        };
+        const display = comments => {
+            const main = document.getElementById('main');
+            for(let i = 0; i < 10; i++) {
+                const div = document.createElement('div');
+                div.classList.add('card');
+                div.innerHTML = `
+                    <h2>${comments[i].name}</h2>
+                    <p>${comments[i].body}</p>
+                `;
+                main.appendChild(div);
+            }
+        };
+        loadData();
+    </script>
 </body>
 
 </html>
