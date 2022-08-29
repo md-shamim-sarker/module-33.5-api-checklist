@@ -1,0 +1,65 @@
+<!-- 
+    ৬. randomuser এর ওয়েবসাইট এ গিয়ে (randomuser.me) এ গিয়ে সেখান থেকে ডাটা লোড করবে। তারপর ইউজারের ছবি দেখাবে। শুধু সেটাও না। ইউজারের location এর মধ্যে যত কিছু আছে। সব দেখাবে ওয়েবসাইট এ। অর্থাৎ street, city, coordinates, timezone যেকোন একভাবে দেখলেই হবে। তবে দেখাতে হবে। 
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="./image/football.svg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container-div {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .card {
+            border: 1px solid gray;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .card img {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container-div"></div>
+    <script>
+        const loadData = () => {
+            fetch('https://randomuser.me/api/?results=52')
+                .then(response => response.json())
+                .then(data => display(data))
+                .catch(error => console.log(error));
+        };
+        const display = data => {
+            users = data.results;
+            const containerDiv = document.getElementById('container-div');
+            users.forEach(user => {
+                const div = document.createElement('div');
+                div.classList.add('card');
+                div.innerHTML = `
+                    <img src="${user.picture.large}" alt="image">
+                    <h2>${user.name.title}. ${user.name.first} ${user.name.last}</h2>
+                    <p>
+                        Street: ${user.location.street.number}, ${user.location.street.name}<br>
+                        City: ${user.location.city}<br>
+                        Coordinate: ${user.location.coordinates.latitude}, ${user.location.coordinates.longitude}<br>
+                        Timezone: ${user.location.timezone.offset}, ${user.location.timezone.description}<br>
+                    </p>
+                `;
+                containerDiv.appendChild(div);
+            });
+        };
+        loadData();
+    </script>
+</body>
+
+</html>
